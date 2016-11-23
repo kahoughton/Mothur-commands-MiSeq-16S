@@ -11,17 +11,11 @@ The commands follow the mothur MiSeq Sop at https://www.mothur.org/wiki/MiSeq_SO
 Files required in the folder containing the mothur.exe: 
 
 1) R1.fastq
-
 2) R2.fastq
-
 3) I1.fastq
-
 4) Oligos file (will need to be generated from the mapping file)
-
 5) Silva alignment file "silva.nr_v123.align" http://www.mothur.org/wiki/Silva_reference_files 
-
 6) Silva taxonomy file "silva.nr_v123.tax" http://www.mothur.org/wiki/Silva_reference_files 
-
 7) Mock community alignment file "HMP_MOCK.v35.align" http://www.mothur.org/wiki/454_SOP#Removing_.22contaminants.22
 
 
