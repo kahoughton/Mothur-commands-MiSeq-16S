@@ -1,0 +1,40 @@
+Creating the oligos file can be done manually in excel or automated in R. Both options are detailed below. 
+
+1. Manually creating the oligos file in excel 
+  a. Open the mapping file in excel.
+	b. Clear the contents of column A and replace with the word “barcode” in each cell.
+	c. Clear the contents of column C and replace with the word “NONE”. 
+	d. Delete Columns D and E
+	e. Delete Row 1. 
+	f. Your table should now only include four columns (A. "barcode" B. the actual bacode string "TAGGACTA" C. "NONE" D. sample name
+  g. Select columns A, B, C, and D; COPY and PASTE into a new notepad file
+	h. SAVE notepad file as “Run1_16S_oligos.txt” in mothur folder 
+		*naming will depend on specific run being processed
+
+2. Using R to create oligos file from mapping file 
+  a. Copy the following commands into R and run once the designated file path and file names are specified.  The file path, output file
+  name, and input file name are highlighted for you to change
+  
+# load libraries (install as needed)
+library(dplyr)
+
+# read in formatting function
+source('http://bit.ly/2dFrriu')
+	
+# set your working directory for the files location
+setwd('D:/mothur v.1.37.6')
+
+# mapping file to format
+fl <- 'Run1_16S_09222016.txt'
+
+# does it need a reverse complement
+rev_cmp <- FALSE
+
+# do you want to save the output to the working directory?
+savefl <- TRUE
+
+# what do you want to name the output file
+flnm <- 'myfile.txt'
+
+# format with the fucntion
+moth_form(fl, rev_cmp, savefl, flnm)
