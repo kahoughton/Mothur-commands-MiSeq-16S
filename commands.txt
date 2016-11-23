@@ -1,0 +1,84 @@
+Below are the suggested commands and workflow for producing an abundance table and taxonomic identification for the samples. This example 
+is named for “Run3_16S” data. If you are using it for a different run, select all parts of the commands that use “Run3_16S” and replace 
+with the naming of your specific run. These commands and their explanations can all be found on the mothur mi-seq page, 
+http://www.mothur.org/wiki/MiSeq_SOP
+
+make.contigs(ffastq=Run3_16S_R1.fastq, rfastq=Run3_16S_R2.fastq, findex=Run3_16S_I1.fastq, oligos=Run3_16S_oligos.txt)
+
+summary.seqs(fasta=Run3_16S_R1.trim.contigs.fasta) 
+
+#This is where you will pull the samples you wish to analyze from the larger group of files. In the groups argument, list all the samples you would like to analyze, including a – in between each sample name. 
+
+get.groups(fasta=Run3_16S_R1.trim.contigs.fasta, group=Run3_16S_R1.contigs.groups, groups=SED_GN1090-SED_GN1091-SED_GN1092)
+
+screen.seqs(fasta=Run3_16S_R1.trim.contigs.pick.fasta, group=Run3_16S_R1.contigs.pick.groups, maxambig=0, maxlength=260)
+
+unique.seqs(fasta=Run3_16S_R1.trim.contigs.pick.good.fasta)
+
+count.seqs(name=Run3_16S_R1.trim.contigs.pick.good.names, group=Run3_16S_R1.contigs.pick.good.groups)
+
+summary.seqs(count=Run3_16S_R1.trim.contigs.pick.good.count_table)
+
+pcr.seqs(fasta=silva.nr_v123.align, start=11894, end=25319, keepdots=F)
+
+summary.seqs(fasta=silva.nr_v123.pcr.align)
+
+align.seqs(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.fasta, reference=silva.nr_v123.pcr.align)
+
+summary.seqs(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.align, count=Run3_16S_R1.trim.contigs.pick.good.count_table)
+
+#the follow command will implement start and end options that need to be specified before running. Take a look at the results from summary.seqs() and pick you start and end values. Example Start at or before position 1968 and end at or after position 11550. 
+
+screen.seqs(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.align, count=Run3_16S_R1.trim.contigs.pick.good.count_table, summary=Run3_16S_R1.trim.contigs.pick.good.unique.summary, start=1968, end=11550, maxhomop=8)
+
+summary.seqs(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.align, count=Run3_16S_R1.trim.contigs.pick.good.good.count_table)
+
+filter.seqs(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.align, vertical=T, trump=.)
+
+unique.seqs(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.fasta, count=Run3_16S_R1.trim.contigs.pick.good.good.count_table)
+
+pre.cluster(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.fasta, count=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.count_table, diffs=2)
+
+chimera.uchime(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.fasta, count=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.count_table, dereplicate=t)
+
+remove.seqs(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.fasta, accnos=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.denovo.uchime.accnos)
+
+summary.seqs(fasta=current, count=current)
+
+classify.seqs(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.fasta, count=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.denovo.uchime.pick.count_table, reference= silva.nr_v123.pcr.align, taxonomy=silva.nr_v123.tax, cutoff=80)
+
+#This next command is optional. It is in place to remove “undesirable” sequences. It will remove sequence from groups specified in the taxon option. 
+
+remove.lineage(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.fasta, count=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.denovo.uchime.pick.count_table, taxonomy=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.nr_v123.wang.taxonomy, taxon=Chloroplast-Mitochondria-unknown-Eukaryota)
+
+#This next command is used to pull the positive control samples out for error analysis. List your mock community samples in the groups argument. 
+
+get.groups(count=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.denovo.uchime.pick.pick.count_table, fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.fasta, groups= NDS_GN1185-NDS_GN1186-NDS_GN1187)
+
+seq.error(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.fasta, count=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.denovo.uchime.pick.pick.pick.count_table, reference=HMP_MOCK.v35.align, aligned=F)
+
+dist.seqs(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.fasta, cutoff=0.20)
+
+cluster(column=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.dist, count=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.denovo.uchime.pick.pick.pick.count_table)
+
+make.shared(list=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.an.unique_list.list, count=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.denovo.uchime.pick.pick.pick.count_table, label=0.03)
+
+rarefaction.single(shared=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.an.unique_list.shared)
+
+### This step is removing the mock communities/controls that were sequenced on each run. Make sure you change the “groups=Mock” to the actual names of the controls sequenced with your samples. Examples: “groups=SED_GN1090-SED_GN1091-SED_GN1092”
+
+remove.groups(count=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.denovo.uchime.pick.pick.count_table, fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.fasta, taxonomy=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.nr_v123.wang.pick.taxonomy, groups=NDS_GN1185-NDS_GN1186-NDS_GN1187)
+
+dist.seqs(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.fasta, cutoff=0.20)
+
+cluster.split(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.fasta, count=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.denovo.uchime.pick.pick.pick.count_table, taxonomy=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.nr_v123.wang.pick.pick.taxonomy, splitmethod=classify, taxlevel=4, cutoff=0.15)
+
+make.shared(list=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.an.unique_list.list, count=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.denovo.uchime.pick.pick.pick.count_table, label=0.03)
+
+classify.otu(list=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.an.unique_list.list, count=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.denovo.uchime.pick.pick.pick.count_table, taxonomy=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.nr_v123.wang.pick.pick.taxonomy, label=0.03)
+
+count.groups(shared=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.an.unique_list.shared)
+
+#After count groups you will find the smallest number of sequences per sample. Use that in the size argument. This will rarefy the data. 
+
+sub.sample(shared=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.an.unique_list.shared, size=XXX)
