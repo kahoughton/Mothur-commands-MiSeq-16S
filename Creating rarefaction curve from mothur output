@@ -1,0 +1,39 @@
+setwd('D:/mothur v.1.37.6')
+fl <- 'Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.an.unique_list.groups_MOCK.rarefaction'
+
+# load libraries
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+# read data, change name of samples
+dat <- read.table(fl, header = T) %>%
+  gather('var', 'val', -numsampled) %>%
+  mutate(
+    samp = gsub('.*(NDS_GN[0-9]*)$', '\\1', var),
+    var = ifelse(grepl('hci', var), 'hi', ifelse(grepl('lci', var), 'lo', 'val'))
+    ) %>%
+  spread(var, val) %>%
+  arrange(samp, numsampled)
+
+# write in samples to plot, filter dat by samples
+samps <- c('WED01', 'WED02')
+# toplo <- filter(dat, samp %in% samps)
+ toplo <- dat
+
+# plot the filtered data with no limits 
+ggplot(toplo, aes(x = numsampled, y = val, group = samp)) + 
+  geom_ribbon(aes(ymin = lo, ymax = hi), colour = 'lightgrey', fill = 'lightgrey') +
+  geom_line(aes(colour = samp)) + 
+  theme_bw() + 
+  scale_x_continuous('Number of reads sampled') +  
+  scale_y_continuous('Number of OTUs observed')# +
+#   guides(col = guide_legend(ncol = 2))
+  
+# plot the filtered data with limits 
+ggplot(toplo, aes(x = numsampled, y = val, group = samp)) + 
+  geom_ribbon(aes(ymin = lo, ymax = hi), colour = 'lightgrey', fill = 'lightgrey') +
+  geom_line(aes(colour = samp)) + 
+  theme_bw() + 
+  scale_x_continuous('Number of reads sampled', limits = c(0, 7000)) + 
+  scale_y_continuous('Number of OTUs observed')
