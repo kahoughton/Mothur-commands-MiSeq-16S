@@ -65,29 +65,29 @@ make.shared(list=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.pr
 
 rarefaction.single(shared=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.an.unique_list.shared)
 
-system (rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.error.summary Run3_16S_R1.mock.error.summary)
+system(rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.error.summary Run3_16S_R1.mock.error.summary)
 
-system (rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.error.seq Run3_16S_R1.mock.error.seq)
+system(rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.error.seq Run3_16S_R1.mock.error.seq)
 
-system (rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.error.chimera Run3_16S_R1.mock.error.chimera)
+system(rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.error.chimera Run3_16S_R1.mock.error.chimera)
 
-system (rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.error.seq.forward Run3_16S_R1.mock.error.seq.forward
+system(rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.error.seq.forward Run3_16S_R1.mock.error.seq.forward)
 
-system (rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.error.seq.reverse Run3_16S_R1.mock.error.seq.reverse)
+system(rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.error.seq.reverse Run3_16S_R1.mock.error.seq.reverse)
 
-system (rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.error.count Run3_16S_R1.mock.error.count) 
+system(rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.error.count Run3_16S_R1.mock.error.count) 
 
-system (rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.error.matrix Run3_16S_R1.mock.error.matrix)
+system(rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.error.matrix Run3_16S_R1.mock.error.matrix)
 
-system (rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.error.ref Run3_16S_R1.mock.error.ref)
+system(rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.error.ref Run3_16S_R1.mock.error.ref)
 
-system (rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.dist Run3_16S_R1.mock.dist)
+system(rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.dist Run3_16S_R1.mock.dist)
 
-system (rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.an.unique_list.list Run3_16S_R1.mock.list)
+system(rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.an.unique_list.list Run3_16S_R1.mock.list)
 
-system (rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.an.unique_list.shared Run3_16S_R1.mock.shared)
+system(rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.an.unique_list.shared Run3_16S_R1.mock.shared)
 
-system (rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.an.unique_list.groups.rarefaction Run3_16S_R1.mock.rarefaction)
+system(rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.an.unique_list.groups.rarefaction Run3_16S_R1.mock.rarefaction)
 
 ### This step is removing the mock communities/controls that were sequenced on each run. Make sure you change the “groups=Mock” to the actual names of the controls sequenced with your samples. Examples: “groups=SED_GN1090-SED_GN1091-SED_GN1092”
 
