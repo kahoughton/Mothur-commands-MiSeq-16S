@@ -49,7 +49,7 @@ classify.seqs(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique
 
 #This next command is optional. It is in place to remove “undesirable” sequences. It will remove sequence from groups specified in the taxon option. 
 
-remove.lineage(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.fasta, count=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.denovo.uchime.pick.count_table, taxonomy=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.nr_v123.wang.taxonomy, taxon=Bacteria;Cyanobacteria_Chloroplast;Chloroplast-Mitochondria-unknown-Eukaryota)
+remove.lineage(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.fasta, count=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.denovo.uchime.pick.count_table, taxonomy=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.nr_v123.wang.taxonomy, taxon=Chloroplast-Mitochondria-unknown-Eukaryota)
 
 #This next command is used to pull the positive control samples out for error analysis. List your mock community samples in the groups argument. 
 
